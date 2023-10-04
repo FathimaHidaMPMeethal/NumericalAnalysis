@@ -1,0 +1,33 @@
+
+
+% Define the matrix A (n x n) and vector b (n x 1)
+%A = ... % Define your matrix A here
+%b = ... % Define your vector b here
+n = length(b); % Determine the size of the system
+
+% Set initial guess for x (can be zeros or any initial guess)
+x = zeros(n, 1);
+
+% Set the maximum number of iterations and the tolerance for convergence
+maxIterations = 1000;
+tolerance = 1e-6;
+
+% Perform Gauss-Seidel iterations
+for iter = 1:maxIterations
+    xPrev = x; % Store the previous solution
+    
+    for i = 1:n
+        % Compute the new value for x(i)
+        x(i) = (b(i) - A(i, 1:i-1) * x(1:i-1) - A(i, i+1:end) * xPrev(i+1:end)) / A(i, i);
+    end
+    
+    % Check for convergence
+    if norm(x - xPrev, inf) < tolerance
+        fprintf('Converged after %d iterations.\n', iter);
+        break;
+    end
+end
+
+% Display the solution
+fprintf('Solution x:\n');
+disp(x);
